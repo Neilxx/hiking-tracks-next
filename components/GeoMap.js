@@ -12,6 +12,13 @@ import CustomMarker from './marker.js'
 // import LazyLoad from 'react-lazyload';
 // import 'leaflet/dist/leaflet.css'
 
+const PanTo = ({ currentCenter }) => {
+    const map = useMap();
+    map.panTo(currentCenter, { animate: true })
+    console.log('currentCenter:', currentCenter)
+    return null;
+};
+
 class GeoMap extends Component {
     state = {
         zoom: 15,
@@ -21,10 +28,18 @@ class GeoMap extends Component {
         inBrowser: false,
     }
     animateRef = React.createRef();
-
+    markers = {};
 
     componentDidMount() {
         this.handleData();
+        if (isMobile) {
+            new ResizeObserver(this.setDivHeight).observe(document.getElementsByClassName('leaflet-container')[0])
+        }
+        setTimeout(() => {
+            if (document.getElementsByClassName('leaflet-marker-icon').length > 0)
+                document.getElementsByClassName('leaflet-marker-icon')[0].click();
+            scroll.scrollToTop();
+        }, 1000)
     }
 
     setDivHeight() {
@@ -61,24 +76,12 @@ class GeoMap extends Component {
             point2Coordinate,
             currentPoint: trackPoints.features[0].timeStr
         });
-        if (isMobile) {
-            new ResizeObserver(this.setDivHeight).observe(document.getElementsByClassName('leaflet-container')[0])
-        }
-        setTimeout(() => {
-            if (document.getElementsByClassName('leaflet-marker-icon').length > 0)
-                document.getElementsByClassName('leaflet-marker-icon')[0].click();
-        }, 1000)
     }
 
-    linkActive = to => {
-        const coordinates = this.state.point2Coordinate[to];
-        // this.refs.map.leafletElement.panTo(coordinates);
-        this.setState({ currentPoint: to })
-    }
 
     render() {
         const { tracks, id, trackInfo: { summary, trackPoints, overviews } = {}} = this.props;
-        const { zoom, currentPoint, loading, imageFlag, inBrowser, point2Coordinate } = this.state
+        const { zoom, currentPoint, loading, imageFlag, point2Coordinate } = this.state
         const originalPostion = trackPoints
             ? trackPoints.features[0].geometry.coordinates.slice().reverse()
             : [23.575272, 120.770131];
@@ -98,26 +101,26 @@ class GeoMap extends Component {
                     <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]}/>
 
                     {trackPoints.features.map((point, idx) => {
-                        const { geometry: { coordinates }, properties: { time, name } } = point;
+                        const { timeStr, geometry: { coordinates }, properties: { time, name } } = point;
                         return (
                             <Link {...{
                                 key: time,
-                                to: point.timeStr,
+                                to: timeStr,
                                 spy: true,
                                 activeClass: "active",
                                 offset: isMobile ? -400 : -340,
                                 smooth: true,
                                 duration: 500,
-                                onSetActive: to => this.linkActive(to),
+                                onSetActive: to => this.setState({ currentPoint: to }),
                             }}>
                                 <Marker {...{
                                     position: coordinates.slice().reverse(),
                                     icon: CustomMarker({
-                                        icon: point.timeStr === currentPoint ? 'red' : 'blue',
+                                        icon: currentPoint === timeStr ? 'red' : 'blue',
                                         size: isMobile ? 'xs' : 'md',
                                     }),
                                 }}>
-                                    <Popup>
+                                    <Popup autoPan={false}>
                                         <div className='popup-content'>
                                             {`${name}  `}
                                             <span><i className="fas fa-search"></i></span>
@@ -186,27 +189,21 @@ class GeoMap extends Component {
 
 const ImageWrapper = props => {
     const [error, setError] = useState(false)
-    return (<> {
-        error
-            ? null
-            : <img {...{
-                src: props.src,
-                alt: props.alt,
-                onError: () => setError(true),
-            }} />
-    }
-    {/* <LazyLoad height={200} offset={100}> */}
-            {/* <img src={imagesMap.imagesMap[`${point.timeStr}.jpg`]} alt={point.timeStr} /> */}
-            {/* <img src={require(`../public/image/${point.timeStr}.jpg`)} alt={point.timeStr} /> */}
-            {/* <img src={props.props} alt={props.alt} /> */}
-    {/* </LazyLoad> */}
+    return (<>
+        {
+            error
+                ? null
+                : <img {...{
+                    src: props.src,
+                    alt: props.alt,
+                    onError: () => setError(true),
+                }} />
+        }
+        {/* <LazyLoad height={200} offset={100}> */}
+                {/* <img src={imagesMap.imagesMap[`${point.timeStr}.jpg`]} alt={point.timeStr} /> */}
+                {/* <img src={require(`../public/image/${point.timeStr}.jpg`)} alt={point.timeStr} /> */}
+                {/* <img src={props.props} alt={props.alt} /> */}
+        {/* </LazyLoad> */}
     </>)
 }
 export default GeoMap
-
-function PanTo({ currentCenter }) {
-    const map = useMap();
-    map.panTo(currentCenter, { animate: true })
-    console.log('currentCenter:', currentCenter)
-    return null
-  }
