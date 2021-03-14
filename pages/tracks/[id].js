@@ -1,4 +1,3 @@
-// import GeoMap from '../../components/GeoMap'
 import dynamic from "next/dynamic";
 import { getTrackInfo } from "../../api/trackInfo/[id].js";
 import { getTracks } from "../../api/tracks/[id].js";
@@ -10,11 +9,11 @@ const GeoMap = dynamic(
 );
 
 // posts will be populated at build time by getStaticProps()
-const TrackInfo = ({ trackInfo, tracks, id }) => {
+const TrackInfo = ({ tracks, trackInfo, id }) => {
   return <>
     <GeoMap {...{
-      trackInfo,
       tracks,
+      trackInfo,
       id,
     }}/>
   </>
@@ -41,15 +40,16 @@ export async function getStaticProps(context) {
   const tracks = await getTracks(id);
   const trackInfo = await getTrackInfo(id);
   return {
-    props: { tracks: JSON.parse(JSON.stringify(tracks)), trackInfo, id },
+    props: { tracks, trackInfo, id },
   }
 }
 
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { id: '1' } },
+      { params: { id: '60322b18b69d64f0ce86c6a5' } },
       { params: { id: '2' } },
+      { params: { id: '1' } },
     ],
     fallback: false,
   };

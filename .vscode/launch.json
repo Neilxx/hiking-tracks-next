@@ -7,6 +7,8 @@
       "name": "Attach",
       "skipFiles": ["<node_internals>/**"],
       "port": 9229,
+      "localRoot": "${workspaceFolder}/",
+      "remoteRoot": "${workspaceFolder}/",
     }
   ]
 }

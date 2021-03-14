@@ -2,7 +2,6 @@ export default async (req, res) => {
   const {
     query: { id },
   } = req
-  debugger;
   const trackInfo = await getTracks(id);
   res.statusCode = 200
   res.json(trackInfo)

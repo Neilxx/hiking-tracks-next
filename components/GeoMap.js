@@ -11,7 +11,7 @@ import { isMobile } from "react-device-detect";
 import CustomMarker from './marker.js'
 // import LazyLoad from 'react-lazyload';
 // import 'leaflet/dist/leaflet.css'
-
+//http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
 const PanTo = ({ currentCenter }) => {
     const map = useMap();
     map.panTo(currentCenter, { animate: true })
@@ -49,11 +49,11 @@ class GeoMap extends Component {
     }
 
     handleData = () => {
-        const { tracks, id, trackInfo: { summary, trackPoints, overviews } = {}} = this.props;
+        const { id, tracks, trackInfo: { summary, points, overviews } = {}} = this.props;
         const dates = [];
-        _.forEach(trackPoints.features, point => {
-            const { properties: { time } } = point
-            point.timeStr = moment(time).format('YYYYMMDD_HHmmss');;
+        _.forEach(points, point => {
+            const { time } = point;
+            point.timeStr = moment(time).format('YYYYMMDD_HHmmss');
 
             // 產生 layout 的日期欄位
             const date = point.timeStr.substring(0, 8);
@@ -67,23 +67,23 @@ class GeoMap extends Component {
                 };
             }
         })
-        const point2Coordinate = _.chain(trackPoints.features)
-                                  .keyBy(o => moment(o.properties.time).format('YYYYMMDD_HHmmss'))
-                                  .mapValues(o => o.geometry.coordinates.slice().reverse())
+        const point2Coordinate = _.chain(points)
+                                  .keyBy(o => moment(o.time).format('YYYYMMDD_HHmmss'))
+                                  .mapValues(o => [o.latitude, o.longitude])
                                   .value()
 
         this.setState({
             point2Coordinate,
-            currentPoint: trackPoints.features[0].timeStr
+            currentPoint: points[0].timeStr
         });
     }
 
 
     render() {
-        const { tracks, id, trackInfo: { summary, trackPoints, overviews } = {}} = this.props;
+        const { id, tracks, trackInfo: { summary, points, overviews } = {}} = this.props;
         const { zoom, currentPoint, loading, imageFlag, point2Coordinate } = this.state
-        const originalPostion = trackPoints
-            ? trackPoints.features[0].geometry.coordinates.slice().reverse()
+        const originalPostion = points
+            ? [points[0].latitude, points[0].longitude]
             : [23.575272, 120.770131];
 
         return (
@@ -95,13 +95,13 @@ class GeoMap extends Component {
                 }}>
                     <TileLayer
                         attribution='&amp;copy <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        url="http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png"
                     />
                     <GeoJSON data={tracks} />
                     <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]}/>
 
-                    {trackPoints.features.map((point, idx) => {
-                        const { timeStr, geometry: { coordinates }, properties: { time, name } } = point;
+                    {points.map((point, idx) => {
+                        const { timeStr, time, name, latitude, longitude } = point;
                         return (
                             <Link {...{
                                 key: time,
@@ -114,7 +114,7 @@ class GeoMap extends Component {
                                 onSetActive: to => this.setState({ currentPoint: to }),
                             }}>
                                 <Marker {...{
-                                    position: coordinates.slice().reverse(),
+                                    position: [latitude, longitude],
                                     icon: CustomMarker({
                                         icon: currentPoint === timeStr ? 'red' : 'blue',
                                         size: isMobile ? 'xs' : 'md',
@@ -142,8 +142,8 @@ class GeoMap extends Component {
                                 <p>{summary.content}</p>
                             </div>
                             <div id="record-container">
-                                {trackPoints.features.map((point, idx) => {
-                                    const { properties: { time, name, description }, dateFirstPoint } = point;
+                                {points.map((point, idx) => {
+                                    const { time, name, description, dateFirstPoint } = point;
                                     return <>
                                             {dateFirstPoint
                                                 ? <Row className='date-first-point' >

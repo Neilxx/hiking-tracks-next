@@ -1,12 +1,15 @@
 // const tracks = require(`../tracks/${id}/tracks.js`);
+const mongoose = require('mongoose');
+import Point from '../../models/Point'
+import Photo from '../../models/Photo'
+import dbConnect from '../../utils/dbConnect'
+
 
 export default async (req, res) => {
   const {
     query: { id },
   } = req
-  // const {tracks} = await import(`../tracks/${id}/tracks.js`);
 
-  // const tracks = require(`../tracks/${id}/tracks.js`);
   const trackInfo = await getTrackInfo(id);
   res.statusCode = 200
   res.json(trackInfo)
@@ -14,7 +17,9 @@ export default async (req, res) => {
 
 export const getTrackInfo = async (id) => {
   const tracks = await import(`../../public/tracks/${id}/tracks.js`);
-  const { trackPoints } = await import(`../../public/tracks/${id}/trackPoints.js`);
+  await dbConnect();
+  const points = await Point.find({ _trackId: id }).populate('photos').lean();
+
   const overviews = [
     [
       '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
@@ -42,10 +47,12 @@ export const getTrackInfo = async (id) => {
   ]
 
   const trackInfo = {
-    // tracks: tracks,
-    trackPoints: trackPoints,
-    overviews: overviews[id - 1],
-    summary: summarys[id - 1]
+    // https://github.com/vercel/next.js/issues/11993
+    tracks: JSON.parse(JSON.stringify(tracks)),
+    points: JSON.parse(JSON.stringify(points)), //_id is not plain object
+    overviews: overviews[0],
+    summary: summarys[0]
   }
+  console.log(trackInfo)
   return trackInfo;
 };
