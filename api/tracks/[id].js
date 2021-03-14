@@ -8,6 +8,6 @@ export default async (req, res) => {
 }
 
 export const getTracks = async (id) => {
-  const {tracks} = await import(`../tracks/${id}/tracks.js`);
+  const {tracks} = await import(`../../public/tracks/${id}/tracks.js`);
   return tracks;
 };
