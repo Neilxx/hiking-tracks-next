@@ -95,7 +95,7 @@ class GeoMap extends Component {
                     zoom: 15,
                 }}>
                     <TileLayer
-                        attribution='&amp;copy <a href="//rudy.basecamp.tw/taiwan_topo.html" style="">Taiwan TOPO</a> contributors'
+                        attribution='&amp;copy <a href="https://rudy.basecamp.tw/taiwan_topo.html" style="">Taiwan TOPO</a> contributors'
                         url="https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png"
                     />
                     <GeoJSON data={tracks} />
