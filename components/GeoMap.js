@@ -12,6 +12,7 @@ import CustomMarker from './marker.js'
 // import LazyLoad from 'react-lazyload';
 // import 'leaflet/dist/leaflet.css'
 //http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
+//https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png
 const PanTo = ({ currentCenter }) => {
     const map = useMap();
     map.panTo(currentCenter, { animate: true })
@@ -94,8 +95,8 @@ class GeoMap extends Component {
                     zoom: 15,
                 }}>
                     <TileLayer
-                        attribution='&amp;copy <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png"
+                        attribution='&amp;copy <a href="//rudy.basecamp.tw/taiwan_topo.html" style="">Taiwan TOPO</a> contributors'
+                        url="https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png"
                     />
                     <GeoJSON data={tracks} />
                     <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]}/>
