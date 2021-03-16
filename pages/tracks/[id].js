@@ -11,6 +11,7 @@ const GeoMap = dynamic(
 const TrackInfo = ({ tracks, trackInfo, id }) => {
   return <>
     <GeoMap {...{
+      key: id,
       tracks,
       trackInfo,
       id,

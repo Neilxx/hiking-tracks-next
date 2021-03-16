@@ -13,15 +13,17 @@ const navbar = () => {
   return (<>
     {/* <Router> */}
       <Navbar bg="light" fixed="top" expand="sm" className="py-1">
-        <Navbar.Brand style={{fontFamily: 'Lobster'}}>
-          {/* <img
-              style={{width: '28px'}}
-              src="../logo_96.png"
-              className="d-inline-block align-top"
-              alt="Mountain Tracks logo"
-            /> */}
-          Hiking Tracks
-        </Navbar.Brand>
+        <Link href='/' Href>
+          <Navbar.Brand style={{fontFamily: 'Lobster'}}>
+            {/* <img
+                style={{width: '28px'}}
+                src="../logo_96.png"
+                className="d-inline-block align-top"
+                alt="Mountain Tracks logo"
+              /> */}
+            Hiking Tracks
+          </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">

@@ -33,6 +33,7 @@ class GeoMap extends Component {
 
     componentDidMount() {
         this.handleData();
+        console.log('componentDidMount');
         if (isMobile) {
             new ResizeObserver(this.setDivHeight).observe(document.getElementsByClassName('leaflet-container')[0])
         }
@@ -86,12 +87,13 @@ class GeoMap extends Component {
         const originalPostion = points
             ? [points[0].latitude, points[0].longitude]
             : [23.575272, 120.770131];
-
+        console.log('render', id)
+        console.log('points', points)
+        console.log('originalPostion', originalPostion)
         return (
             <div className="outer-container">
                 <FontAwesomeIcon icon={faChevronUp} id="toTopButton" transform="shrink-6" onClick={() =>  scroll.scrollToTop()}/>
                 <MapContainer {...{
-                    key: id,
                     center: originalPostion,
                     zoom: 15,
                 }}>
