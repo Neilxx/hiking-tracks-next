@@ -47,12 +47,11 @@ export const getTrackInfo = async (id) => {
   ]
 
   const trackInfo = {
-    // https://github.com/vercel/next.js/issues/11993
+    // work around. source: https://github.com/vercel/next.js/issues/11993
     tracks: JSON.parse(JSON.stringify(tracks)),
     points: JSON.parse(JSON.stringify(points)), //_id is not plain object
     overviews: overviews[0],
     summary: summarys[0]
   }
-  console.log(trackInfo)
   return trackInfo;
 };

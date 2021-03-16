@@ -6,8 +6,8 @@ import Photo from '../../models/Photo'
 import moment from 'moment';
 
 export default async (req, res) => {
-  const connect = await dbConnect();
-  // const { trackPoints } = await import(`../../public/tracks/1/trackPoints.js`);
+  // const connect = await dbConnect();
+  // const { trackPoints } = await import(`../../public/tracks/2/trackPoints.js`);
   // const _trackId = new mongoose.Types.ObjectId;
 
   // for (const feature of trackPoints.features) {
@@ -16,6 +16,7 @@ export default async (req, res) => {
   //   const point = await Point.create({
   //     name, description, time, latitude, longitude, elevation, _trackId,
   //   })
+  //   console.log(name)
   //   await Photo.create({
   //     point: point._id,
   //     fileName: `${moment(point.time).format('YYYYMMDD_HHmmss')}.jpg`,
@@ -23,7 +24,7 @@ export default async (req, res) => {
   // }
 
   // const points = await Point.find({});
-  // for(const point of points) {
+  // for (const point of points) {
   //   const photo = await Photo.findOne({ point: point })
   //   point.photos.push(photo)
   //   await point.save()

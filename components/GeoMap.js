@@ -91,6 +91,7 @@ class GeoMap extends Component {
             <div className="outer-container">
                 <FontAwesomeIcon icon={faChevronUp} id="toTopButton" transform="shrink-6" onClick={() =>  scroll.scrollToTop()}/>
                 <MapContainer {...{
+                    key: id,
                     center: originalPostion,
                     zoom: 15,
                 }}>

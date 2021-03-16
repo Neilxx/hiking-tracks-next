@@ -20,16 +20,17 @@ const navbar = () => {
               className="d-inline-block align-top"
               alt="Mountain Tracks logo"
             /> */}
-          {' '}
           Hiking Tracks
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link href='/tracks/60322b18b69d64f0ce86c6a5'>
+            <Link href='/tracks/60322b18b69d64f0ce86c6a5' passHref>
               <Nav.Link>石夢眠月水漾</Nav.Link>
             </Link>
-            {/* <Nav.Link as={Link} to='/tracks/2'>20200621</Nav.Link> */}
+            <Link href='/tracks/6050a26e8a62c1cc17100fd2' passHref>
+              <Nav.Link>童話嘆息</Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

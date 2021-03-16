@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { getTrackInfo } from "../../api/trackInfo/[id].js";
 import { getTracks } from "../../api/tracks/[id].js";
 import React, { Component, useState } from 'react'
-import Navbar from "../../components/navbar"
 const GeoMap = dynamic(
   () => import("../../components/GeoMap"),
   { ssr: false },
@@ -19,17 +18,6 @@ const TrackInfo = ({ tracks, trackInfo, id }) => {
   </>
 }
 
-// class TrackInfoMap extends Component {
-//   state = {
-//     inBrowser: false,
-//   }
-//   componentDidMount() {
-//     this.setState({ inBrowser: true });
-//   }
-//   render() {
-//     return <>{this.state.inBrowser ? <GeoMap/> : null}</>
-//   }
-// }
 export default TrackInfo;
 
 // This function gets called at build time on server-side.
@@ -38,7 +26,10 @@ export default TrackInfo;
 export async function getStaticProps(context) {
   const { params: { id }, req } = context;
   const tracks = await getTracks(id);
+  console.log('getTracks')
   const trackInfo = await getTrackInfo(id);
+  console.log('getTrackInfo')
+
   return {
     props: { tracks, trackInfo, id },
   }
@@ -48,8 +39,7 @@ export async function getStaticPaths() {
   return {
     paths: [
       { params: { id: '60322b18b69d64f0ce86c6a5' } },
-      // { params: { id: '2' } },
-      // { params: { id: '1' } },
+      { params: { id: '6050a26e8a62c1cc17100fd2' } },
     ],
     fallback: false,
   };
