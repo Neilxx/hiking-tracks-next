@@ -1,5 +1,6 @@
 // const tracks = require(`../tracks/${id}/tracks.js`);
 const mongoose = require('mongoose');
+import moment from 'moment';
 import Point from '../../models/Point'
 import Photo from '../../models/Photo'
 import dbConnect from '../../utils/dbConnect'
@@ -19,19 +20,14 @@ export const getTrackInfo = async (id) => {
   const tracks = await import(`../../public/tracks/${id}/tracks.js`);
   await dbConnect();
   const points = await Point.find({ _trackId: id }).populate('photos').lean();
+  points.forEach(point => point.timeStr = moment(point.time).format('YYYYMMDD_HHmmss'));
 
-  const overviews = [
-    [
-      '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
-      'C1 → 眠月車站 → 石猴車站 → 松山 → 酒瓶營地 → 眠月神木叉路 → 水漾森林',
-      'C2 → 水漾森林 → 千人洞 → 臥船洞 → 行豐吊橋 → 停車場'
-    ],
-    [
-      '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
-      'C1 → 眠月車站 → 石猴車站 → 松山 → 酒瓶營地 → 眠月神木叉路 → 水漾森林',
-      'C2 → 水漾森林 → 千人洞 → 臥船洞 → 行豐吊橋 → 停車場'
-    ],
-  ];
+  const overviews = {
+    '20200228': '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
+    '20200229': 'C1 → 眠月車站 → 石猴車站 → 松山 → 酒瓶營地 → 眠月神木叉路 → 水漾森林',
+    '20200301': 'C2 → 水漾森林 → 千人洞 → 臥船洞 → 行豐吊橋 → 停車場'
+  };
+
 
   const summarys = [
     {
@@ -50,8 +46,8 @@ export const getTrackInfo = async (id) => {
     // work around. source: https://github.com/vercel/next.js/issues/11993
     tracks: JSON.parse(JSON.stringify(tracks)),
     points: JSON.parse(JSON.stringify(points)), //_id is not plain object
-    overviews: overviews[0],
-    summary: summarys[0]
+    overviews,
+    summary: summarys[0],
   }
   return trackInfo;
 };
