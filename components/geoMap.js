@@ -140,7 +140,7 @@ class GeoMap extends Component {
                       <Row className='date-first-point' >
                         <Col xs={2} className='date-block'>
                           <div className='date-day'>{`Day ${day}`}</div>
-                          <div className='date-number'>{date}</div>
+                          <div className='date-number'>{dayjs(date).format('MM.DD')}</div>
                         </Col>
                         <Col className='date-schedule'>
                           {overview}
