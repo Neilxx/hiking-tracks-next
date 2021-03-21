@@ -2,7 +2,8 @@ import React, { Component, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvent } from 'react-leaflet'
 import L from 'leaflet';
 import { Link, animateScroll as scroll } from 'react-scroll';
-import moment from 'moment';
+// import moment from 'moment';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -53,7 +54,7 @@ class GeoMap extends Component {
   handleData = () => {
     const { trackInfo: { points } = {} } = this.props;
     const point2Coordinate = _.chain(points)
-      .keyBy(o => moment(o.time).format('YYYYMMDD_HHmmss'))
+      .keyBy('timeStr')
       .mapValues(o => [o.latitude, o.longitude])
       .value()
 
@@ -134,25 +135,23 @@ class GeoMap extends Component {
                   const overview = overviews[date];
                   day++;
                   return <div>
-                    {
-                      overviews[date]
-                        ? <Row className='date-first-point' >
-                          <Col xs={2} className='date-block'>
-                            <div className='date-day'>{`Day ${day}`}</div>
-                            <div className='date-number'>{date}</div>
-                          </Col>
-                          <Col className='date-schedule'>
-                            {overview}
-                          </Col>
-                        </Row>
-                        : null
+                    {overviews[date] &&
+                      <Row className='date-first-point' >
+                        <Col xs={2} className='date-block'>
+                          <div className='date-day'>{`Day ${day}`}</div>
+                          <div className='date-number'>{date}</div>
+                        </Col>
+                        <Col className='date-schedule'>
+                          {overview}
+                        </Col>
+                      </Row>
                     }
                     {
                       value.map(point => <Row>
                         <Col xs={2} className='time'>
                           <div id="vertical-timeline"></div>
                           <div className='circle' style={point.timeStr === currentPoint ? { backgroundColor: '#F97F75' } : {}}></div>
-                          <p>{moment(point.time).format('HH:mm')}</p>
+                          <p>{dayjs(point.time).format('HH:mm')}</p>
                         </Col>
                         <Col >
                           <div className='triangle'></div>
