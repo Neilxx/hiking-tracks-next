@@ -177,6 +177,13 @@ img {
   color: white;
 }
 
+#tileSelect {
+  position: fixed;
+  z-index: 99;
+  left: 70px;
+  top: 60px;
+}
+
 /* #not-found-container {
   text-align: center;
 }

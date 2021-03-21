@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvent } 
 import { Link, animateScroll as scroll } from 'react-scroll';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
@@ -12,6 +12,11 @@ import CustomMarker from './marker.js'
 
 //http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
 //https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png
+
+const TILE_MAP = {
+  '魯地圖(黑白)': 'https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png',
+  '魯地圖(彩色)': 'http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png',
+}
 
 const PanTo = ({ currentCenter }) => {
   const map = useMap();
@@ -26,6 +31,7 @@ class GeoMap extends Component {
     loading: true,
     imageFlag: false,
     isMobile: false,
+    tile: Object.keys(TILE_MAP)[0],
   }
   animateRef = React.createRef();
 
@@ -64,7 +70,7 @@ class GeoMap extends Component {
 
   render() {
     const { id, tracks, trackInfo: { summary, points, overviews } = {} } = this.props;
-    const { zoom, currentPoint, loading, imageFlag, point2Coordinate } = this.state;
+    const { zoom, currentPoint, loading, imageFlag, point2Coordinate, tile } = this.state;
     const defaultPosition = [23.575272, 120.770131];
     const originalPostion = points
       ? [points[0].latitude, points[0].longitude]
@@ -75,8 +81,14 @@ class GeoMap extends Component {
     console.log('originalPostion', originalPostion)
     return (
       <div className="outer-container">
+        <Form id='tileSelect'>
+          <Form.Control as="select" onChange={event => this.setState({ tile: event.target.value })}>
+            {Object.keys(TILE_MAP).map(name => <option>{name}</option>)}
+          </Form.Control>
+        </Form>
         <FontAwesomeIcon icon={faChevronUp} id="toTopButton" transform="shrink-6" onClick={() => scroll.scrollToTop()} />
         <MapContainer {...{
+          key: tile,
           center: originalPostion,
           zoom: 15,
           whenCreated: () => {
@@ -86,7 +98,7 @@ class GeoMap extends Component {
         }}>
           <TileLayer
             attribution='&amp;copy <a href="https://rudy.basecamp.tw/taiwan_topo.html" style="">Taiwan TOPO</a> contributors'
-            url="https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png"
+            url={TILE_MAP[tile]}
           />
           <GeoJSON data={tracks} />
           <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]} />
