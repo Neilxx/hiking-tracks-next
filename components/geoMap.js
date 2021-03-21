@@ -1,19 +1,18 @@
 import React, { Component, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvent } from 'react-leaflet'
-import L from 'leaflet';
 import { Link, animateScroll as scroll } from 'react-scroll';
-// import moment from 'moment';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
 import CustomMarker from './marker.js'
 // import LazyLoad from 'react-lazyload';
-// import 'leaflet/dist/leaflet.css'
+
 //http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
 //https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png
+
 const PanTo = ({ currentCenter }) => {
   const map = useMap();
   map.panTo(currentCenter, { animate: true })
@@ -24,31 +23,30 @@ const PanTo = ({ currentCenter }) => {
 class GeoMap extends Component {
   state = {
     zoom: 15,
-    overview: this.props.overview,
     loading: true,
     imageFlag: false,
-    inBrowser: false,
+    isMobile: false,
   }
   animateRef = React.createRef();
-  markers = {};
 
   componentDidMount() {
     this.handleData();
-    console.log('componentDidMount');
-    if (isMobile) {
-      new ResizeObserver(this.setDivHeight).observe(document.getElementsByClassName('leaflet-container')[0])
-    }
-    setTimeout(() => {
-      if (document.getElementsByClassName('leaflet-marker-icon').length > 0)
-        document.getElementsByClassName('leaflet-marker-icon')[0].click();
-      scroll.scrollToTop();
-    }, 1000)
   }
 
-  setDivHeight() {
+  initFirstRecord() {
+    const firstMarker = _.get(document.getElementsByClassName('leaflet-marker-icon'), [0]);
+    if (firstMarker) {
+      firstMarker.click();
+      scroll.scrollToTop();
+    }
+  }
+
+  setMobileDivHeight() {
+    if (!isMobile) return;
+
     const mapHeight = document.getElementsByClassName('leaflet-container')[0].clientHeight;
     document.getElementById("mapBlocker").style.height = `${mapHeight + 48}px`;
-    [...document.getElementsByClassName('date-first-point')].forEach(element => element.style.top = `${mapHeight + 48}px`)
+    [...document.getElementsByClassName('date-first-point')].forEach(element => element.style.top = `${mapHeight + 48}px`);
   }
 
   handleData = () => {
@@ -56,7 +54,7 @@ class GeoMap extends Component {
     const point2Coordinate = _.chain(points)
       .keyBy('timeStr')
       .mapValues(o => [o.latitude, o.longitude])
-      .value()
+      .value();
 
     this.setState({
       point2Coordinate,
@@ -64,13 +62,13 @@ class GeoMap extends Component {
     });
   }
 
-
   render() {
     const { id, tracks, trackInfo: { summary, points, overviews } = {} } = this.props;
-    const { zoom, currentPoint, loading, imageFlag, point2Coordinate } = this.state
+    const { zoom, currentPoint, loading, imageFlag, point2Coordinate } = this.state;
+    const defaultPosition = [23.575272, 120.770131];
     const originalPostion = points
       ? [points[0].latitude, points[0].longitude]
-      : [23.575272, 120.770131];
+      : defaultPosition;
     let day = 0;
     console.log('render', id)
     console.log('points', points)
@@ -81,6 +79,10 @@ class GeoMap extends Component {
         <MapContainer {...{
           center: originalPostion,
           zoom: 15,
+          whenCreated: () => {
+            this.setMobileDivHeight();
+            this.initFirstRecord();
+          },
         }}>
           <TileLayer
             attribution='&amp;copy <a href="https://rudy.basecamp.tw/taiwan_topo.html" style="">Taiwan TOPO</a> contributors'
@@ -88,8 +90,7 @@ class GeoMap extends Component {
           />
           <GeoJSON data={tracks} />
           <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]} />
-
-          {points.map((point, idx) => {
+          {points.map(point => {
             const { timeStr, time, name, latitude, longitude } = point;
             return (
               <Link {...{
@@ -111,8 +112,8 @@ class GeoMap extends Component {
                 }}>
                   <Popup autoPan={false}>
                     <div className='popup-content'>
-                      {`${name}  `}
-                      <span><i className="fas fa-search"></i></span>
+                      {name}{' '}
+                      <span><FontAwesomeIcon icon={faSearch}/></span>
                     </div>
                   </Popup>
                 </Marker>
@@ -147,7 +148,7 @@ class GeoMap extends Component {
                       </Row>
                     }
                     {
-                      value.map(point => <Row>
+                      value.map(point => <Row key={point.timeStr}>
                         <Col xs={2} className='time'>
                           <div id="vertical-timeline"></div>
                           <div className='circle' style={point.timeStr === currentPoint ? { backgroundColor: '#F97F75' } : {}}></div>
