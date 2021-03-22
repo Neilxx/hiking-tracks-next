@@ -37,6 +37,8 @@ class GeoMap extends Component {
 
   componentDidMount() {
     this.handleData();
+
+    // tricks: 讓 marker icon 先 load
     setTimeout(() => this.setState({ showImage: true }), 0);
   }
 
@@ -195,8 +197,7 @@ class GeoMap extends Component {
 const ImageWrapper = props => {
   const [error, setError] = useState(false)
   return (<>
-    {
-      error || !props.showImage
+    { error || !props.showImage
         ? null
         : <img {...{
           src: props.src,
