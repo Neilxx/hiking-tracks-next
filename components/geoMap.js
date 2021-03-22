@@ -29,7 +29,7 @@ class GeoMap extends Component {
   state = {
     zoom: 15,
     loading: true,
-    imageFlag: false,
+    showImage: false,
     isMobile: false,
     tile: Object.keys(TILE_MAP)[0],
   }
@@ -37,6 +37,7 @@ class GeoMap extends Component {
 
   componentDidMount() {
     this.handleData();
+    setTimeout(() => this.setState({ showImage: true }), 0);
   }
 
   initFirstRecord() {
@@ -70,7 +71,7 @@ class GeoMap extends Component {
 
   render() {
     const { id, tracks, trackInfo: { summary, points, overviews } = {} } = this.props;
-    const { zoom, currentPoint, loading, imageFlag, point2Coordinate, tile } = this.state;
+    const { zoom, currentPoint, loading, showImage, point2Coordinate, tile } = this.state;
     const defaultPosition = [23.575272, 120.770131];
     const originalPostion = points
       ? [points[0].latitude, points[0].longitude]
@@ -174,7 +175,7 @@ class GeoMap extends Component {
                               ? <p className="description">{point.description}</p>
                               : null
                             }
-                            <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt="" />
+                            <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} showImage={showImage}/>
                             {/* <img src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} /> */}
                             {/* <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr}/> */}
                           </div>
@@ -195,7 +196,7 @@ const ImageWrapper = props => {
   const [error, setError] = useState(false)
   return (<>
     {
-      error
+      error || !props.showImage
         ? null
         : <img {...{
           src: props.src,
