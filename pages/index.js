@@ -30,7 +30,6 @@ export default function Home({ isConnected }) {
                     position: 'absolute',
                     top: '30%',
                     color: 'white',
-                    // marginTop: 200,
                     fontSize: 60,
                     padding: '40px 0',
                   }
@@ -40,30 +39,25 @@ export default function Home({ isConnected }) {
               </div>
             </Link>
           </Carousel.Item>
-          {/* <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="holder.js/800x400?text=Second slide&bg=282c34"
-              alt="Second slide"
-            />
-
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
           <Carousel.Item>
             <img
-              className="d-block w-100"
-              src="holder.js/800x400?text=Third slide&bg=20232a"
-              alt="Third slide"
+              src="6050a26e8a62c1cc17100fd2.jpeg"
+              alt="6050a26e8a62c1cc17100fd2"
             />
-
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </Carousel.Caption>
-          </Carousel.Item> */}
+            <Link href='/tracks/6050a26e8a62c1cc17100fd2' passHref>
+              <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div {...{
+                  style: {
+                    position: 'absolute',
+                    top: '40%',
+                    fontSize: 60,
+                  }
+                }}>
+                  <p style={{cursor: 'pointer', border: 'solid 5px black', padding: '5px 20px'}}>無雙 • 童話 • 嘆息</p>
+                </div>
+              </div>
+            </Link>
+          </Carousel.Item>
         </Carousel>
       </main>
     </>

@@ -4,7 +4,6 @@ import Link from 'next/link'
 
 const navbar = () => {
   return (<>
-    {/* <Router> */}
       <Navbar bg="light" fixed="top" expand="sm" className="py-1">
         <Link href='/' Href>
           <Navbar.Brand style={{fontFamily: 'Lobster'}}>
@@ -29,20 +28,6 @@ const navbar = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      {/* <Switch>
-          <Route exact path="/">
-          </Route>
-          <Route {...{
-            path: "/tracks/:id",
-            component: props => <GeoMap key={props.match.params.id} {...props}/>
-          }}>
-          </Route>
-          <Route {...{
-            path: "/*",
-            component: () => <NotFound/>
-          }}></Route>
-        </Switch> */}
-    {/* </Router> */}
     </>)
 }
 

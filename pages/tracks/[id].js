@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { getTrackInfo } from "../../api/trackInfo/[id].js";
 import { getTracks } from "../../api/tracks/[id].js";
 import React from 'react';
+
 const GeoMap = dynamic(
   () => import("../../components/geoMap"),
   { ssr: false },
