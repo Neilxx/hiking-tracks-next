@@ -73,7 +73,7 @@ class GeoMap extends Component {
 
   render() {
     const { id, tracks, trackInfo: { summary, points, overviews } = {} } = this.props;
-    const { zoom, currentPoint, loading, showImage, point2Coordinate, tile } = this.state;
+    const { currentPoint, showImage, point2Coordinate, tile } = this.state;
     const defaultPosition = [23.575272, 120.770131];
     const originalPostion = points
       ? [points[0].latitude, points[0].longitude]

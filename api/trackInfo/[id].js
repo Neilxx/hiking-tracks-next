@@ -1,9 +1,6 @@
-
-// import moment from 'moment';
 import Point from '../../models/Point';
 import Photo from '../../models/Photo';
 import dbConnect from '../../utils/dbConnect';
-
 import dayjs from 'dayjs';
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);

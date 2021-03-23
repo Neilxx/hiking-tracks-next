@@ -1,13 +1,12 @@
 import dynamic from "next/dynamic";
 import { getTrackInfo } from "../../api/trackInfo/[id].js";
 import { getTracks } from "../../api/tracks/[id].js";
-import React, { Component, useState } from 'react'
+import React from 'react';
 const GeoMap = dynamic(
   () => import("../../components/geoMap"),
   { ssr: false },
 );
 
-// posts will be populated at build time by getStaticProps()
 const TrackInfo = ({ tracks, trackInfo, id }) => {
   return <>
     <GeoMap {...{
