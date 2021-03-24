@@ -40,6 +40,11 @@ class GeoMap extends Component {
 
     // tricks: 讓 marker icon 先 load
     setTimeout(() => this.setState({ showImage: true }), 0);
+
+    // if (isMobile) {
+    //   debugger
+    //   // new ResizeObserver(this.setMobileDivHeight).observe(document.getElementsByClassName('leaflet-container')[0])
+    // }
   }
 
   initFirstRecord() {
@@ -95,8 +100,10 @@ class GeoMap extends Component {
           center: originalPostion,
           zoom: 15,
           whenCreated: () => {
-            this.setMobileDivHeight();
             this.initFirstRecord();
+            if (isMobile) {
+              new ResizeObserver(this.setMobileDivHeight).observe(document.getElementsByClassName('leaflet-container')[0]);
+            }
           },
         }}>
           <TileLayer
