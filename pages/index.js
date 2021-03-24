@@ -13,7 +13,7 @@ export default function Home({ isConnected }) {
         <Carousel>
           <Carousel.Item>
             <img
-              src="home_page.png"
+              src="home_page.jpg"
               alt="home_page"
             />
           </Carousel.Item>
@@ -41,7 +41,7 @@ export default function Home({ isConnected }) {
           </Carousel.Item>
           <Carousel.Item>
             <img
-              src="6050a26e8a62c1cc17100fd2.jpeg"
+              src="6050a26e8a62c1cc17100fd2.jpg"
               alt="6050a26e8a62c1cc17100fd2"
             />
             <Link href='/tracks/6050a26e8a62c1cc17100fd2' passHref>

@@ -184,14 +184,6 @@ img {
   top: 60px;
 }
 
-/* .carousel {
-  height: 100vh;
-  width: 100%;
-  overflow:hidden;
-}
-.carousel .carousel-inner {
-  height:100%;
-} */
 .carousel {
   height: 100vh;
   width: 100%;
@@ -199,7 +191,7 @@ img {
 }
 
 .carousel-item {
-  top: -190px;
+  top: -205px;
 }
 
 .caption {
