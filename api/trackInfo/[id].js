@@ -23,30 +23,42 @@ export const getTrackInfo = async (id) => {
   points.forEach(point => point.timeStr = dayjs.utc(point.time).utcOffset(8).format('YYYYMMDD_HHmmss'));
 
   const overviews = {
-    '20200228': '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
-    '20200229': 'C1 → 眠月車站 → 石猴車站 → 松山 → 酒瓶營地 → 眠月神木叉路 → 水漾森林',
-    '20200301': 'C2 → 水漾森林 → 千人洞 → 臥船洞 → 行豐吊橋 → 停車場'
+    '60322b18b69d64f0ce86c6a5': {
+      '20200228': '停車場 → 石夢谷 → 仙夢園 → 叉路取右→ 石夢谷 → 塔山車站 → 三號隧道旁紮營 C1',
+      '20200229': 'C1 → 眠月車站 → 石猴車站 → 松山 → 酒瓶營地 → 眠月神木叉路 → 水漾森林',
+      '20200301': 'C2 → 水漾森林 → 千人洞 → 臥船洞 → 行豐吊橋 → 停車場'
+    },
+    '6050a26e8a62c1cc17100fd2': {
+      '20200621': '32K郡大山登山口 → 無雙山登山口/郡大林道45.3K → 烏瓦拉鼻溪營地 → 無雙社 C1',
+      '20200622': 'C1 → 亞力士營地 → 最後水源 W2 → 無雙山 → 無雙東峰鐵杉林營地 C2',
+      '20200623': 'C2 → 儲山 → 水源叉路 → 本鄉山 → 東郡大山 → 獵人營地 C3',
+      '20200624': 'C3 → 郡東山 →可樂可樂安山 → 天南可蘭山 → 童話世界 C4',
+      '20200625': 'C4 = C5 休息天',
+      '20200626': 'C5 童話世界 → 裡門山 → 斷稜東山 → 義西請馬至山 → 烏妹浪胖山 → 哈伊拉漏溪北源營地 → 僕洛西擴山 → 嘆息灣 C6',
+      '20200627': 'C6 嘆息灣 → 馬利加南山北峰 → 馬利加南山 → 馬利亞文路山東峰 → 馬利亞文路山 → 馬博山屋 C7',
+      '20200628': 'C7 馬博山屋 → 秀姑巒山 → 秀姑坪 → 白洋金礦山屋 → 中央金礦山屋 → 八通關 → 東埔',
+    }
   };
 
-  const summarys = [
-    {
-      title: '石夢眠月水漾',
+  const summarys = {
+    '60322b18b69d64f0ce86c6a5': {
+      title: '石夢 • 眠月 • 水漾 (三天)',
       content: `        時間：2020.02.28 - 2020.03.01
         人員：大軍、彥廷、阿如、冠魚、小乖、阿伊、爾森、Winky`,
     },
-    {
-      title: '石夢眠月水漾',
-      content: `        時間：2020.02.28 - 2020.03.01
-        人員：大軍、猴猴麵包樹、阿周、浪人彥廷、阿如、爾森、Winky`,
+    '6050a26e8a62c1cc17100fd2': {
+      title: '無雙 • 童話 • 嘆息 (八天)',
+      content: `        時間：2020.06.21 - 2020.06.28
+        人員：大軍、彥廷、曹妹、iio、鮪魚、詣淳、天赫`,
     }
-  ]
+  };
 
   const trackInfo = {
     // work around. source: https://github.com/vercel/next.js/issues/11993
     tracks: JSON.parse(JSON.stringify(tracks)),
     points: JSON.parse(JSON.stringify(points)), //_id is not plain object
-    overviews,
-    summary: summarys[0],
+    overviews: overviews[id],
+    summary: summarys[id],
   }
   return trackInfo;
 };
