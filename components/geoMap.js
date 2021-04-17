@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvent } 
 import { Link, animateScroll as scroll } from 'react-scroll';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
@@ -147,6 +147,7 @@ class GeoMap extends Component {
               <div className='summary' name="summary">
                 <h3>{summary.title}</h3>
                 <p>{summary.content}</p>
+                <TextRecordModal points={points} />
               </div>
               <div id="record-container">
                 {_.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => {
@@ -213,5 +214,37 @@ const ImageWrapper = props => {
     {/* <img src={props.props} alt={props.alt} /> */}
     {/* </LazyLoad> */}
   </>)
+}
+
+const TextRecordModal = props => {
+  const { points } = props;
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow} id="text-record-btn">
+        純文字紀錄
+      </Button>
+
+      <Modal show={show} onHide={handleClose} size='lg'>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          {
+            _.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => (<>
+              <div>{date}</div>
+              {value.map(point => <div>{dayjs(point.time).format('HH:mm')} {point.name}</div>)}
+            </>))
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
 export default GeoMap

@@ -205,6 +205,10 @@ img {
   padding: 5px 20px;
 }
 
+#text-record-btn {
+  margin: 10px 30px;
+}
+
 /* #not-found-container {
   text-align: center;
 }
