@@ -39,6 +39,7 @@ export async function getStaticPaths() {
     paths: [
       { params: { id: '60322b18b69d64f0ce86c6a5' } },
       { params: { id: '6050a26e8a62c1cc17100fd2' } },
+      { params: { id: '607aa95447d537147a4a1d0a' } },
     ],
     fallback: false,
   };
