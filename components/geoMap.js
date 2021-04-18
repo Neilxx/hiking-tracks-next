@@ -86,7 +86,7 @@ class GeoMap extends Component {
       <div className="outer-container">
         <Form id='tileSelect'>
           <Form.Control as="select" onChange={event => this.setState({ tile: event.target.value })}>
-            {Object.keys(TILE_MAP).map(name => <option>{name}</option>)}
+            {Object.keys(TILE_MAP).map(name => <option key={name}>{name}</option>)}
           </Form.Control>
         </Form>
         <FontAwesomeIcon icon={faChevronUp} id="toTopButton" transform="shrink-6" onClick={() => scroll.scrollToTop()} />
@@ -153,7 +153,7 @@ class GeoMap extends Component {
                 {_.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => {
                   const overview = overviews[date];
                   day++;
-                  return <div>
+                  return <div key={day}>
                     {overviews[date] &&
                       <Row className='date-first-point' >
                         <Col xs={2} className='date-block'>
@@ -232,10 +232,10 @@ const TextRecordModal = props => {
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           {
-            _.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => (<>
+            _.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => (<React.Fragment key={date}>
               <div>{date}</div>
-              {value.map(point => <div>{dayjs(point.time).format('HH:mm')} {point.name}</div>)}
-            </>))
+              {value.map(point => <div key={point.time}>{dayjs(point.time).format('HH:mm')} {point.name}</div>)}
+            </React.Fragment>))
           }
         </Modal.Body>
         <Modal.Footer>
