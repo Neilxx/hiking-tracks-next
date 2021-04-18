@@ -1,12 +1,17 @@
 import Head from 'next/head'
 import Navbar from './navbar.js'
 
-const layout = ({ children, title = 'Hiking Tracks' }) => (
+const layout = ({ id, children, trackInfo: { summary: { title = 'Hiking Tracks', content = '' } = {} } = {} }) => (
   <div id="root">
     <Head>
       <title>{ title }</title>
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      <meta name="description" content={content} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={content}/>
+      <meta property="og:image" content={`https://hiking.dajing.li/images/${id}/og_image.jpg`} />
+
       <link rel="shortcut icon" href="/favicon.png" />
       {/* google font */}
       <link rel="preconnect" href="https://fonts.gstatic.com"/>

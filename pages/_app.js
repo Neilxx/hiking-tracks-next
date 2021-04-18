@@ -16,7 +16,7 @@ Router.onRouteChangeError = () => {
 }
 
 function MyApp({ Component, pageProps }) {
-  return  <Layout title={pageProps.title}>
+  return  <Layout {...pageProps}>
     <Loading/>
     <Component {...pageProps} />
   </Layout>
