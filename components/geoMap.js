@@ -79,9 +79,6 @@ class GeoMap extends Component {
       ? [points[0].latitude, points[0].longitude]
       : defaultPosition;
     let day = 0;
-    console.log('render', id)
-    console.log('points', points)
-    console.log('originalPostion', originalPostion)
     return (
       <div className="outer-container">
         <Form id='tileSelect'>
