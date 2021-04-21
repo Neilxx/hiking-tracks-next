@@ -6,7 +6,7 @@ const Loading = () => (
     height: '100%',
     backgroundColor: 'rgba(51,51,51,.6)',
     position: 'fixed',
-    zIndex: 999,
+    zIndex: 9999,
     justifyContent: 'center',
     alignItems: 'center',
     display: 'none',

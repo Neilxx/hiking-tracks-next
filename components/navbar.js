@@ -19,6 +19,9 @@ const navbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+          <Link href='/tracks/607aa95447d537147a4a1d0a' passHref>
+              <Nav.Link>哈卡巴里斯</Nav.Link>
+            </Link>
             <Link href='/tracks/60322b18b69d64f0ce86c6a5' passHref>
               <Nav.Link>石夢眠月水漾</Nav.Link>
             </Link>
