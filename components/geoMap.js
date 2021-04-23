@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
 import CustomMarker from './marker.js'
+
 // import LazyLoad from 'react-lazyload';
 
 //http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
@@ -55,7 +56,7 @@ class GeoMap extends Component {
 
     const mapHeight = document.getElementsByClassName('leaflet-container')[0].clientHeight;
     document.getElementById("mapBlocker").style.height = `${mapHeight + 48}px`;
-    [...document.getElementsByClassName('date-first-point')].forEach(element => element.style.top = `${mapHeight + 48}px`);
+    [...document.getElementsByClassName('sticky-container')].forEach(element => element.style.top = `${mapHeight + 48}px`);
   }
 
   handleData = () => {
@@ -135,7 +136,7 @@ class GeoMap extends Component {
             )
           })}
         </MapContainer>
-        <Container fluid>
+        <Container fluid id="record-container" >
           <Row>
             <Col id="mapBlocker" style={{ position: 'static' }} xs={12} sm={6}>
               <div className="element"  ></div>
@@ -146,31 +147,31 @@ class GeoMap extends Component {
                 <p>{summary.content}</p>
                 <TextRecordModal points={points} />
               </div>
-              <div id="record-container">
+              <div>
                 {_.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => {
                   const overview = overviews[date];
                   day++;
                   return <div key={day}>
                     {overviews[date] &&
-                      <Row className='date-first-point' >
-                        <Col xs={2} className='date-block'>
-                          <div className='date-day'>{`Day ${day}`}</div>
-                          <div className='date-number'>{dayjs(date).format('MM.DD')}</div>
-                        </Col>
-                        <Col className='date-schedule'>
-                          {overview}
-                        </Col>
-                      </Row>
+                      <div className="sticky-container">
+                        <Row className='sticky-date-block' >
+                          <Col xs={2} className='date-block'>
+                            <div className='date-day'>{`Day ${day}`}</div>
+                            <div className='date-number'>{dayjs(date).format('MM.DD')}</div>
+                          </Col>
+                          <Col className='date-schedule'>
+                            {overview}
+                          </Col>
+                        </Row>
+                      </div>
                     }
                     {
                       value.map(point => <Row key={point.timeStr}>
-                        <Col xs={2} className='time'>
+                        <Col xs={1} className='time-block'>
                           <div id="vertical-timeline"></div>
-                          <div className='circle' style={point.timeStr === currentPoint ? { backgroundColor: '#F97F75' } : {}}></div>
-                          <p>{dayjs(point.time).format('HH:mm')}</p>
+                          <div className='time' style={point.timeStr === currentPoint ? { backgroundColor: '#F97F75' } : {}}>{dayjs(point.time).format('HH:mm')}</div>
                         </Col>
-                        <Col >
-                          <div className='triangle'></div>
+                        <Col className='record-block'>
                           <div className="record" name={point.timeStr} key={point.time}>
                             <p className="title">{point.name}</p>
                             {point.description
@@ -178,8 +179,6 @@ class GeoMap extends Component {
                               : null
                             }
                             <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} showImage={showImage}/>
-                            {/* <img src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} /> */}
-                            {/* <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr}/> */}
                           </div>
                         </Col>
                       </Row>)
@@ -199,11 +198,13 @@ const ImageWrapper = props => {
   return (<>
     { error || !props.showImage
         ? null
-        : <img {...{
-          src: props.src,
-          alt: props.alt,
-          onError: () => setError(true),
-        }} />
+        : <div className="image-container">
+          <img {...{
+            src: props.src,
+            alt: props.alt,
+            onError: () => setError(true),
+          }} />
+        </div>
     }
     {/* <LazyLoad height={200} offset={100}> */}
     {/* <img src={imagesMap.imagesMap[`${point.timeStr}.jpg`]} alt={point.timeStr} /> */}
@@ -224,7 +225,6 @@ const TextRecordModal = props => {
       <Button variant="primary" onClick={handleShow} id="text-record-btn">
         純文字紀錄
       </Button>
-
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>

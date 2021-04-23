@@ -25,113 +25,110 @@ body, body * {
   overflow: hidden;
 }
 
-.triangle {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right:10px solid white;
-  left: 5px;
-  top: 35px;
-  position: absolute;
-}
-
 img {
   width: 100%;
 }
 
-/* .date {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  text-align: center;
-  background-color: white;
-  z-index: 99;
-  border-radius: 10px;
-  margin: 0px 7px;
-  padding: 12px;
-  box-shadow: 1px 1px 1px 0 rgba(51,51,51,.1);
-  ;
-} */
+#record-container {
+  padding: 0;
+}
 
-.date-block {
-  background-color: #00b0bd;
+#record-container div.row {
+  margin: 0 10px;
+}
+
+#record-container .date-block {
   z-index: 99;
   text-align: center;
   color: white;
   padding: 7px;
+  font-weight: 700;
 }
 
-.date-day {
+#record-container .date-day {
   font-size: 25px;
 }
 
-.date-number {
+#record-container .date-number {
   font-size: 20px;
 }
 
-.date-schedule {
+#record-container .date-schedule {
   z-index: 99;
-  background-color: #00b0bd;
   color: white;
   padding: 15px;
   font-size: 20px;
 }
 
-.date-first-point {
+#record-container .sticky-container {
+  padding: 10px 0 0 0;
+  /* position: sticky;
+  top: 48px;
+  z-index: 99; */
+  background-color: #eee;
+}
+
+#record-container .sticky-date-block {
   position: sticky;
   top: 48px;
   z-index: 99;
+  background-color: #aaa;
+  margin: 0px 10px;
+  border-radius: 5px;
 }
 
-.time {
+#record-container .time-block {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 23px;
   text-align: right;
-  padding: 30px 30px 0px 5px;
 }
-.time p {
+
+#record-container .time-block p {
   margin-top: 20%;
   right: 20px;
 }
 
 #record-container .title {
   padding: 10px 15px;
-  margin: 10px 20px;
+  margin: 10px 45px 0px 45px;
   font-weight: 500;
   font-size: 25px;
-  border-bottom: solid 0.5px #ebebeb;
+  /* border-bottom: solid 0.5px #ebebeb; */
 }
 
-.description {
-  padding: 0 20px 5px 38px;
+#record-container .description {
+  padding: 0 20px 0 60px;
   margin-bottom: 0;
   font-size: 20px;
 }
 
 #root {
-  background-color: #ebebeb;
+  background-color: #eee;
 }
 
-#vertical-timeline {
+#record-container #vertical-timeline {
   position: absolute;
-  width: 8px;
+  width: 6px;
   height: 100%;
   top: 0;
-  left: 90%;
+  left: 60%;
   margin-left: -2px;
-  background: #00b0bd;
+  background: #bbb;
   z-index: 1;
 }
 
-.circle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+#record-container .time {
   position: absolute;
-  left: calc(90% - 13px);
+  left: 0;
   top: 32px;
-  background: #00b0bd;
   z-index: 5;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background-color: #99cfff;
+  color: white;
+  box-shadow: 4px 6px 5px 0px rgb(0 0 0 / 10%);
+  width: 100px;
+  text-align: center;
 }
 
 .leaflet-popup-tip,
@@ -144,24 +141,46 @@ img {
   cursor: pointer;
 }
 
-.summary {
+#record-container .summary {
   background-color: white;
   margin: 68px 10px 10px 10px;
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 0px 0px 10px 6px rgb(0 0 0 / 10%);
 }
 
-.summary p {
+#record-container .summary p {
   white-space: pre;
   font-size: 20px;
   padding: 5px;
 }
 
-.summary h3 {
+#record-container .summary h3 {
   text-align: center;
-  background: #00b0bd;
+  background: #bbb;
   color: white;
   padding: 10px;
+}
+
+#record-container .record-block {
+  padding: 0;
+}
+
+#record-container .record-block .record {
+  box-shadow: 0px 0px 10px 6px rgb(0 0 0 / 10%);
+}
+
+#record-container .record-block .record img {
+  height: auto;
+  max-width: 100%;
+
+}
+
+.image-container {
+  max-width: 100%;
+  margin: 8px 15px 15px 15px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 #toTopButton {
@@ -205,17 +224,13 @@ img {
   padding: 5px 20px;
 }
 
-#text-record-btn {
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
   margin: 10px 30px;
+  background-color: #8cc6ff !important;
+  border-color: #8cc6ff !important;
+  font-size: 14px;
 }
 
-/* #not-found-container {
-  text-align: center;
-}
-
-#not-found-text {
-  display: inline-block;
-} */
 
 @media screen and (max-width: 768px) {
   .leaflet-container {
@@ -225,85 +240,86 @@ img {
     z-index: 999;
     margin-top: 48px;
   }
-  .time {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 13px;
-    text-align: right;
-    padding: 30px 30px 0px 5px;
-  }
-  .time p {
-    margin-top: 20%;
-    /* right: 20px; */
-  }
-  .circle {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    position: absolute;
-    left: calc(90% - 7px);
-    top: 24px;
-    background: #00b0bd;
-    z-index: 5;
+
+  #record-container > .row > .col-sm-6 {
+    padding: 0;
   }
 
-  #vertical-timeline {
-    position: absolute;
-    width: 5px;
-    height: 100%;
-    top: 0;
-    left: 90%;
-    margin-left: -2px;
-    background: #00b0bd;
-    z-index: 1;
+  #record-container .summary {
+    background-color: white;
+    margin: 10px;
+    border-radius: 5px;
+    overflow: hidden;
   }
 
-  .triangle {
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right:10px solid white;
-    left: 1.8%;
-    top: 22px;
-    position: absolute;
-  }
-  #record-container .title {
-    padding: 5px 15px;
-    margin: 0;
-    font-weight: 500;
-    font-size: 15px;
-    border-bottom: solid 0.5px #ebebeb;
-  }
-  .description {
-    padding: 5px 15px;
-    margin-bottom: 0;
+  #record-container .summary p {
+    white-space: pre;
     font-size: 10px;
+    padding: 5px;
+    margin-bottom: 0;
   }
-  .date-block {
-    background-color: #00b0bd;
+
+  #record-container .summary h3 {
+    font-size: 15px !important;
+    margin-bottom: 0;
+  }
+
+  #record-container .date-block {
     z-index: 99;
     text-align: center;
     color: white;
     padding: 7px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .date-day {
-    font-size: 15px;
-  }
-
-  .date-number {
-    font-size: 15px;
-    max-height: 1000000px;
-  }
-
-  .date-schedule  {
-    background-color: white;
+  #record-container .date-schedule {
     z-index: 99;
-    background-color: #00b0bd;
     color: white;
-    padding: 7px;
-    font-size: 14px;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  #record-container .date-day {
+    font-size: 15px;
+  }
+
+  #record-container .date-number {
+    font-size: 15px;
+  }
+
+  #record-container .time {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+    text-align: right;
+    width: 60px;
+    top: 25px;
+  }
+
+  #record-container #vertical-timeline {
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    margin-left: -2px;
+    background: #bbb;
+    z-index: 1;
+  }
+
+  #record-container .title {
+    padding: 12px 15px 5px 40px;
+    margin: 0;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #record-container .description {
+    padding: 0px 15px 0px 40px;
+    margin-bottom: 0;
+    font-size: 10px;
   }
 
   .record {
@@ -314,28 +330,14 @@ img {
     overflow: hidden;
   }
 
-  .date-first-point {
+  #record-container .sticky-date-block {
     position: sticky;
     z-index: 99;
+    background-color: #aaa;
   }
 
-  .summary {
-    background-color: white;
-    margin: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-
-  .summary p {
-    white-space: pre;
-    font-size: 10px;
-    padding: 5px;
-    margin-bottom: 0;
-  }
-
-  .summary h3 {
-    font-size: 15px !important;
-    margin-bottom: 0;
+  #record-container div.row {
+    margin: 0px 5px;
   }
 
   .leaflet-popup-tip,
@@ -343,10 +345,7 @@ img {
       color: #234c5e;
       font-size: 14px;
   }
-/*
-  .container-fluid {
-    margin-top: 20px
-  } */
+
   #mobile-home {
     margin-top: 48px;
     padding-top: 1px;
@@ -354,7 +353,6 @@ img {
   }
 
   #mobile-home > div {
-    /* position: relative; */
     border-radius: 10px;
     margin: 15px;
     overflow: auto;
@@ -365,7 +363,6 @@ img {
     padding: 5px 0px 0px;
     font-weight: bold;
     font-size: 20px;
-    /* margin-left: 15px; */
     margin: 8px 25px 0px;
   }
 
