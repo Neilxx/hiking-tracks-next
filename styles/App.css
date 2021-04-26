@@ -89,8 +89,8 @@ img {
 }
 
 #record-container .title {
-  padding: 10px 15px;
-  margin: 10px 45px 0px 45px;
+  padding: 0px 15px;
+  margin: 0px 45px 3px 45px;
   font-weight: 500;
   font-size: 25px;
   /* border-bottom: solid 0.5px #ebebeb; */
@@ -149,10 +149,26 @@ img {
   box-shadow: 0px 0px 10px 6px rgb(0 0 0 / 10%);
 }
 
-#record-container .summary p {
-  white-space: pre;
-  font-size: 20px;
-  padding: 5px;
+#record-container .summary > div {
+  margin: 20px;
+}
+
+#record-container .summary div {
+  font-size: 18px;
+}
+
+#record-container .summary span {
+  background-color: #666;
+  color: white;
+  margin: 0 10px;
+  padding: 3px 8px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+#record-container .summary #text-record-btn {
+  margin: 15px 0 0 0;
+  font-size: 18px;
 }
 
 #record-container .summary h3 {
@@ -167,18 +183,18 @@ img {
 }
 
 #record-container .record-block .record {
+  padding: 20px 0px;
   box-shadow: 0px 0px 10px 6px rgb(0 0 0 / 10%);
 }
 
 #record-container .record-block .record img {
   height: auto;
   max-width: 100%;
-
 }
 
 .image-container {
   max-width: 100%;
-  margin: 8px 15px 15px 15px;
+  margin: 12px 15px 15px 15px;
   border-radius: 5px;
   overflow: hidden;
 }

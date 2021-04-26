@@ -144,8 +144,11 @@ class GeoMap extends Component {
             <Col xs={12} sm={6} >
               <div className='summary' name="summary">
                 <h3>{summary.title}</h3>
-                <p>{summary.content}</p>
-                <TextRecordModal points={points} />
+                <div>
+                  <div>日期：{summary.date}<span>{summary.days}</span></div>
+                  <div>人員：{summary.members}</div>
+                  <TextRecordModal points={points} />
+                </div>
               </div>
               <div>
                 {_.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => {
@@ -173,11 +176,8 @@ class GeoMap extends Component {
                         </Col>
                         <Col className='record-block'>
                           <div className="record" name={point.timeStr} key={point.time}>
-                            <p className="title">{point.name}</p>
-                            {point.description
-                              ? <p className="description">{point.description}</p>
-                              : null
-                            }
+                            {point.name && <p className="title">{point.name}</p>}
+                            {point.description && <p className="description">{point.description}</p>}
                             <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} showImage={showImage}/>
                           </div>
                         </Col>
@@ -231,13 +231,13 @@ const TextRecordModal = props => {
           {
             _.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => (<React.Fragment key={date}>
               <div>{date}</div>
-              {value.map(point => <div key={point.time}>{dayjs(point.time).format('HH:mm')} {point.name}</div>)}
+              {value.map(point => <div key={point.time}>{dayjs(point.time).format('HH:mm')} {point.name} {point.name && point.description && '。'} {point.description}</div>)}
             </React.Fragment>))
           }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            關閉
           </Button>
         </Modal.Footer>
       </Modal>
