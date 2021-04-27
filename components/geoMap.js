@@ -106,7 +106,7 @@ class GeoMap extends Component {
           <GeoJSON data={tracks} />
           <PanTo currentCenter={point2Coordinate && point2Coordinate[currentPoint]} />
           {points.map(point => {
-            const { timeStr, time, name, latitude, longitude } = point;
+            const { timeStr, time, name, description, latitude, longitude } = point;
             return (
               <Link {...{
                 key: time,
@@ -127,7 +127,7 @@ class GeoMap extends Component {
                 }}>
                   <Popup autoPan={false}>
                     <div className='popup-content'>
-                      {name}{' '}
+                      {name || `${description.substring(0 ,7)}...`}{' '}
                       <span><FontAwesomeIcon icon={faSearch}/></span>
                     </div>
                   </Popup>
