@@ -1,1 +1,1 @@
-## [Hiking Tracks](https://hiking.daing.li)
+## [Hiking Tracks](https://hiking.dajing.li)
