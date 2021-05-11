@@ -178,7 +178,14 @@ class GeoMap extends Component {
                           <div className="record" name={point.timeStr} key={point.time}>
                             {point.name && <p className="title">{point.name}</p>}
                             {point.description && <p className="description">{point.description}</p>}
-                            <ImageWrapper src={`/images/${id}/${point.timeStr}.jpg`} alt={point.timeStr} showImage={showImage}/>
+                            {point.photos.map(photo => (
+                                <ImageWrapper {...{
+                                  src: `/images/${id}/${photo.fileName}`,
+                                  alt: photo.fileName,
+                                  showImage,
+                                  description: photo.description,
+                                }}/>
+                            ))}
                           </div>
                         </Col>
                       </Row>)
@@ -194,16 +201,18 @@ class GeoMap extends Component {
 }
 
 const ImageWrapper = props => {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
+  const { src, alt, description, showImage } = props;
   return (<>
-    { error || !props.showImage
+    { error || !showImage
         ? null
         : <div className="image-container">
           <img {...{
-            src: props.src,
-            alt: props.alt,
+            src,
+            alt,
             onError: () => setError(true),
           }} />
+          {description ? <div className="image-description">{description}</div> : null}
         </div>
     }
     {/* <LazyLoad height={200} offset={100}> */}

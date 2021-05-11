@@ -17,7 +17,7 @@ export default function Home({ isConnected }) {
 const WebHome = () => (
   <>
     <main>
-      <Carousel>
+      <Carousel interval={null}>
         <Carousel.Item>
           <img
             src="home_page.jpg"
@@ -26,7 +26,7 @@ const WebHome = () => (
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src="60322b18b69d64f0ce86c6a5.jpg"
+            src="60322b18b69d64f0ce86c6a5_web.jpg"
             alt="60322b18b69d64f0ce86c6a5"
           />
           <Link href='/tracks/60322b18b69d64f0ce86c6a5' passHref>
@@ -48,7 +48,7 @@ const WebHome = () => (
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src="6050a26e8a62c1cc17100fd2.jpg"
+            src="6050a26e8a62c1cc17100fd2_web.jpg"
             alt="6050a26e8a62c1cc17100fd2"
           />
           <Link href='/tracks/6050a26e8a62c1cc17100fd2' passHref>
