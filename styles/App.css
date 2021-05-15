@@ -35,6 +35,9 @@ img {
   color: white;
   padding: 7px;
   font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #record-container .date-day {
@@ -42,7 +45,7 @@ img {
 }
 
 #record-container .date-number {
-  font-size: 20px;
+  font-size: 22px;
 }
 
 #record-container .date-schedule {
@@ -90,7 +93,7 @@ img {
 #record-container .description {
   padding: 0 20px 0 60px;
   margin-bottom: 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #root {
@@ -148,6 +151,24 @@ img {
   font-size: 18px;
 }
 
+#record-container .summary .row {
+  margin-bottom: 6px
+}
+
+#record-container .summary .col-sm-2 {
+  text-align: right;
+  padding: 0px
+}
+
+#record-container .summary .col-sm-10 {
+  padding: 0px
+}
+
+#record-container .summary a:hover {
+  color: #888;
+  text-decoration: none;
+}
+
 #record-container .summary span {
   background-color: #666;
   color: white;
@@ -157,9 +178,15 @@ img {
   border-radius: 5px;
 }
 
-#record-container .summary #text-record-btn {
-  margin: 15px 0 0 0;
+#record-container .summary .custom-btn {
+  margin: 15px 10px 0 0;
   font-size: 18px;
+  box-shadow: none;
+}
+
+#record-container .summary .custom-btn:hover {
+  color: white;
+  background-color: #5eafff !important;
 }
 
 #record-container .summary h3 {
@@ -174,7 +201,7 @@ img {
 }
 
 #record-container .record-block .record {
-  padding: 20px 0px;
+  padding: 20px 0px 10px 0px;
   box-shadow: 0px 0px 10px 6px rgb(0 0 0 / 10%);
   margin-top: 15px;
   margin-bottom: 40px;
@@ -190,7 +217,7 @@ img {
 
 #record-container .image-container {
   max-width: 100%;
-  margin: 12px 15px 15px 15px;
+  margin: 17px 15px 15px 15px;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -201,17 +228,18 @@ img {
     margin-top: 4px;
 }
 
-#toTopButton {
+#to-top-btn {
   position: fixed;
   bottom: 2%;
   right: 3%;
-  background-color: #00b0bd;
+  background-color: #8cc6ff ;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   z-index: 100;
   cursor: pointer;
   color: white;
+  box-shadow: 2px 3px 9px 1px rgb(0 0 0 / 30%);
 }
 
 #tileSelect {

@@ -49,24 +49,34 @@ export const getTrackInfo = async (id) => {
   const summarys = {
     '60322b18b69d64f0ce86c6a5': {
       title: '石夢 • 眠月 • 水漾 (三天)',
-      days: '三天',
+      day: 3,
       date: '2020.02.28 - 2020.03.01',
       members: '大軍、彥廷、阿如、冠魚、小乖、阿伊、爾森、Winky',
-      member_numbers: 8,
+      memberNumber: 8,
     },
     '6050a26e8a62c1cc17100fd2': {
       title: '無雙 • 童話 • 嘆息',
-      days: '八天',
+      day: 8,
       date: '2020.06.21 - 2020.06.28',
       members: '詣淳(領隊 OB)、大軍(實領 OB)、彥廷(實領 OB)、曹妹(外校)、iio(嚮導 OB)、鮪魚(嚮導 OB)、天赫(實領)',
-      member_numbers: 7,
+      memberNumber: 7,
     },
     '607aa95447d537147a4a1d0a': {
       title: '哈卡巴里斯',
-      days: '四天',
+      day: 4,
       date: '2021.04.02 - 2021.04.05',
       members: '大軍(領隊 OB、紀錄)、彥廷(實領 OB)、曹妹(外校)、幾摳(嚮導 OB)、文家(嚮導 OB)、詣淳(嚮導 OB)、天赫(實領)',
-      member_numbers: 7,
+      memberNumber: 7,
+      gpxFileName: '20210402_哈卡巴里斯_航跡.gpx',
+      references: [
+        { name: '2011.1 莎韻之路探哈卡巴里斯出銘山 (台大)', url: 'http://www.mountain.org.tw/WebBBS/Record/RecordOne.aspx?RecordID=217&MessageID=20502' },
+        { name: '2016.4 莎韻之路 (馬克)', url: 'https://www.markchoo.com.tw/mark/2834' },
+        { name: '2011.10 南澳環形古道_莎韻之路 (週三隊)', url: 'https://www.keepon.com.tw/thread-18e87e16-17d8-e411-93ec-000e04b74954.html' },
+        { name: '2016.4 南澳古道莫很溫泉出太平山 (參考銘山段)', url: 'http://ys1128.blogspot.com/2016/04/201604010407.html' },
+        { name: '流興山 (俚與邊) -> 哈卡巴里斯 路徑探討', url: 'https://www.keepon.com.tw/thread-5b5e4451-16d8-e411-93ec-000e04b74954.html' },
+        { name: 'HAGA PARIS 哈卡巴里斯紀錄片', url: 'https://www.youtube.com/watch?app=desktop&v=HMzXV_icDvw' },
+        { name: '找路：月光．沙韻．Klesan - 林克孝', url: 'https://www.books.com.tw/products/0010456953' },
+      ],
     }
   };
 

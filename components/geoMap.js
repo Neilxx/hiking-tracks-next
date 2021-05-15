@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import _ from 'lodash';
 import { Container, Row, Col, Form, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faSearch, faLink } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
 import CustomMarker from './marker.js'
 
@@ -87,7 +87,7 @@ class GeoMap extends Component {
             {Object.keys(TILE_MAP).map(name => <option key={name}>{name}</option>)}
           </Form.Control>
         </Form>
-        <FontAwesomeIcon icon={faChevronUp} id="toTopButton" transform="shrink-6" onClick={() => scroll.scrollToTop()} />
+        <FontAwesomeIcon icon={faChevronUp} id="to-top-btn" transform="shrink-6" onClick={() => scroll.scrollToTop()} />
         <MapContainer {...{
           key: tile,
           center: originalPostion,
@@ -145,9 +145,37 @@ class GeoMap extends Component {
               <div className='summary' name="summary">
                 <h3>{summary.title}</h3>
                 <div>
-                  <div>日期：{summary.date}<span>{summary.days}</span></div>
-                  <div>人員：{summary.members}</div>
-                  <TextRecordModal points={points} />
+                  <Row>
+                    <Col sm={2}>日期：</Col>
+                    <Col sm={10}>{summary.date}<span>{summary.day}天</span></Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}>人員：</Col>
+                    <Col sm={10}>{summary.members}<span>{summary.memberNumber}人</span></Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}>參考資料：</Col>
+                    <Col sm={10}>
+                      {summary.references && summary.references.map(({ name, url }) => (
+                        <div className="reference">
+                          <a href={url} target="_blank">{name}<FontAwesomeIcon icon={faLink} transform="shrink-8" /></a>
+                        </div>
+                      ))}
+                      </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}></Col>
+                    <Col sm={10}>
+                      <TextRecordModal points={points} />
+                      {summary.gpxFileName &&
+                        <Button
+                          variant="primary"
+                          className="custom-btn"
+                          href={`/tracks/${id}/${summary.gpxFileName}`}
+                        >GPX 下載</Button>
+                      }
+                    </Col>
+                  </Row>
                 </div>
               </div>
               <div>
@@ -231,7 +259,7 @@ const TextRecordModal = props => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} id="text-record-btn">
+      <Button variant="primary" onClick={handleShow} className="custom-btn">
         純文字紀錄
       </Button>
       <Modal show={show} onHide={handleClose} size='lg'>
