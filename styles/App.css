@@ -277,6 +277,10 @@ img {
   font-size: 14px;
 }
 
+.modal .modal-date {
+  font-weight: 700;
+}
+
 
 @media screen and (max-width: 768px) {
   .leaflet-container {
@@ -298,6 +302,23 @@ img {
     overflow: hidden;
   }
 
+  #record-container .summary > div {
+    margin: 15px 8px;
+  }
+
+  #record-container .summary div {
+    font-size: 14px;
+  }
+
+  #record-container .summary .col-sm-2 {
+    text-align: left;
+    padding: 0px;
+  }
+
+  #record-container .summary .col-sm-10 {
+    padding: 0px 0px 0px 25px;
+  }
+
   #record-container .summary p {
     white-space: pre;
     font-size: 10px;
@@ -305,8 +326,21 @@ img {
     margin-bottom: 0;
   }
 
+  #record-container .summary span {
+    margin: 0 5px;
+    padding: 1px 5px;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  #record-container .summary .custom-btn {
+    margin: 15px 10px 0 0;
+    font-size: 14px;
+    box-shadow: none;
+  }
+
   #record-container .summary h3 {
-    font-size: 15px !important;
+    font-size: 20px !important;
     margin-bottom: 0;
   }
 
@@ -356,14 +390,14 @@ img {
   }
 
   #record-container .title {
-    padding: 0px 15px 0 30px;
+    padding: 0px 15px 0 26px;
     margin: 0;
     font-weight: 500;
     font-size: 15px;
   }
 
   #record-container .description {
-    padding: 5px 0px 0px 30px;
+    padding: 5px 0px 0px 26px;
     margin-bottom: 0;
     font-size: 10px;
   }
@@ -374,7 +408,7 @@ img {
     background-color: white;
     border-radius: 5px;
     overflow: hidden;
-    padding: 10 px 12px;
+    padding: 12px;
   }
 
   #record-container .sticky-date-block {
@@ -387,12 +421,16 @@ img {
     margin: 0px 5px;
   }
 
-  .image-container {
+  #record-container .image-container {
     max-width: 100%;
-    margin: 10px 0 0 0;
+    margin: 8px 0 0 0;
     border-radius: 5px;
     overflow: hidden;
   }
+
+  #record-container .image-container > .image-description {
+    font-size: 12px;
+}
 
   .leaflet-popup-tip,
   .leaflet-popup-content-wrapper {
