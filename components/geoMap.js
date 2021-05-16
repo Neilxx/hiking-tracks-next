@@ -22,7 +22,6 @@ const TILE_MAP = {
 const PanTo = ({ currentCenter }) => {
   const map = useMap();
   map.panTo(currentCenter, { animate: true })
-  console.log('currentCenter:', currentCenter)
   return null;
 };
 
@@ -54,7 +53,10 @@ class GeoMap extends Component {
   setMobileDivHeight() {
     if (!isMobile) return;
 
-    const mapHeight = document.getElementsByClassName('leaflet-container')[0].clientHeight;
+    const leafletContainer = document.getElementsByClassName('leaflet-container')[0];
+    if (!leafletContainer) return;
+
+    const mapHeight = leafletContainer.clientHeight;
     document.getElementById("mapBlocker").style.height = `${mapHeight + 48}px`;
     [...document.getElementsByClassName('sticky-container')].forEach(element => element.style.top = `${mapHeight + 48}px`);
   }
@@ -146,16 +148,16 @@ class GeoMap extends Component {
                 <h3>{summary.title}</h3>
                 <div>
                   <Row>
-                    <Col sm={2}>日期：</Col>
-                    <Col sm={10}>{summary.date}<span>{summary.day}天</span></Col>
+                    <Col xs={12} sm={2}>日期：</Col>
+                    <Col xs={12} sm={10}>{summary.date}<span>{summary.day}天</span></Col>
                   </Row>
                   <Row>
-                    <Col sm={2}>人員：</Col>
-                    <Col sm={10}>{summary.members}<span>{summary.memberNumber}人</span></Col>
+                    <Col xs={12} sm={2}>人員：</Col>
+                    <Col xs={12} sm={10}>{summary.members}<span>{summary.memberNumber}人</span></Col>
                   </Row>
                   <Row>
-                    <Col sm={2}>參考資料：</Col>
-                    <Col sm={10}>
+                    <Col xs={12} sm={2}>參考資料：</Col>
+                    <Col xs={12} sm={10}>
                       {summary.references && summary.references.map(({ name, url }) => (
                         <div className="reference">
                           <a href={url} target="_blank">{name}<FontAwesomeIcon icon={faLink} transform="shrink-8" /></a>
@@ -163,6 +165,16 @@ class GeoMap extends Component {
                       ))}
                       </Col>
                   </Row>
+                  {_.get(summary, ['others', 'length']) > 0 && <>
+                    <Row>
+                      <Col xs={12} sm={2}>其他：</Col>
+                      <Col xs={12} sm={10}>
+                        {summary.others.map(other => (
+                          <div>{other}</div>
+                        ))}
+                        </Col>
+                    </Row>
+                  </>}
                   <Row>
                     <Col sm={2}></Col>
                     <Col sm={10}>
@@ -267,7 +279,7 @@ const TextRecordModal = props => {
         <Modal.Body>
           {
             _.map(_.groupBy(points, point => point.timeStr.substring(0, 8)), (value, date) => (<React.Fragment key={date}>
-              <div>{date}</div>
+              <div className="modal-date">{date}</div>
               {value.map(point => <div key={point.time}>{dayjs(point.time).format('HH:mm')} {point.name} {point.name && point.description && '。'} {point.description}</div>)}
             </React.Fragment>))
           }
