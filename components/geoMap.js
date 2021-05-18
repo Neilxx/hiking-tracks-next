@@ -217,7 +217,9 @@ class GeoMap extends Component {
                         <Col className='record-block'>
                           <div className="record" name={point.timeStr} key={point.time}>
                             {point.name && <p className="title">{point.name}</p>}
-                            {point.description && <p className="description">{point.description}</p>}
+                            {point.description && <>
+                              {point.description.split('\\n').map((text, index) => <p key={index} className="description">{text}</p>)}
+                            </>}
                             {point.photos.map(photo => (
                                 <ImageWrapper {...{
                                   src: `/images/${id}/${photo.fileName}`,
