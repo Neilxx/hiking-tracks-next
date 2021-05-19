@@ -155,16 +155,18 @@ class GeoMap extends Component {
                     <Col xs={12} sm={2}>人員：</Col>
                     <Col xs={12} sm={10}>{summary.members}<span>{summary.memberNumber}人</span></Col>
                   </Row>
-                  <Row>
-                    <Col xs={12} sm={2}>參考資料：</Col>
-                    <Col xs={12} sm={10}>
-                      {summary.references && summary.references.map(({ name, url }) => (
-                        <div className="reference">
-                          <a href={url} target="_blank">{name}<FontAwesomeIcon icon={faLink} transform="shrink-8" /></a>
-                        </div>
-                      ))}
-                      </Col>
-                  </Row>
+                  {summary.references &&
+                    <Row>
+                      <Col xs={12} sm={2}>參考資料：</Col>
+                      <Col xs={12} sm={10}>
+                        {summary.references.map(({ name, url }) => (
+                          <div className="reference">
+                            <a href={url} target="_blank">{name}<FontAwesomeIcon icon={faLink} transform="shrink-8" /></a>
+                          </div>
+                        ))}
+                        </Col>
+                    </Row>
+                  }
                   {_.get(summary, ['others', 'length']) > 0 && <>
                     <Row>
                       <Col xs={12} sm={2}>其他：</Col>
