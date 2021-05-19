@@ -8,15 +8,14 @@ import moment from 'moment';
 // await Photo.deleteMany({});
 
 export default async (req, res) => {
-  // const connect = await dbConnect();
-  // var ObjectId = mongoose.Types.ObjectId;
-  // const points = await Point.find({ _trackId: ObjectId('607aa95447d537147a4a1d0a') });
+  const connect = await dbConnect();
+  var ObjectId = mongoose.Types.ObjectId;
+  // const points = await Point.find({ _trackId: ObjectId('60322b18b69d64f0ce86c6a5') });
   // for (const point of points) {
-  //   await Photo.findOneAndRemove({ point: point })
+  //   point.photos = _.get(point, ['photos', 0]) || [];
+  //   await point.save()
   // }
 
-  // await Point.deleteMany({ _trackId: ObjectId('607aa95447d537147a4a1d0a') });
 
-
-  // res.status(200).json({ name: 'delete success' })
+  res.status(200).json({ name: 'delete success' })
 }
