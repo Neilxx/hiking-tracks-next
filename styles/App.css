@@ -242,7 +242,7 @@ img {
   box-shadow: 2px 3px 9px 1px rgb(0 0 0 / 30%);
 }
 
-#tileSelect {
+#tile-select {
   position: fixed;
   z-index: 99;
   left: 70px;

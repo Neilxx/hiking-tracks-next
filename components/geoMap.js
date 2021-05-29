@@ -8,15 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faSearch, faLink } from '@fortawesome/free-solid-svg-icons'
 import { isMobile } from "react-device-detect";
 import CustomMarker from './marker.js'
-
-// import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazyload';
 
 //http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png
 //https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png
 
 const TILE_MAP = {
+  '魯地圖(彩色)': 'https://rs.happyman.idv.tw/map/rudy/{z}/{x}/{y}.png  ',
   '魯地圖(黑白)': 'https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png',
-  '魯地圖(彩色)': 'http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png',
 }
 
 const PanTo = ({ currentCenter }) => {
@@ -29,7 +28,6 @@ class GeoMap extends Component {
   state = {
     zoom: 15,
     loading: true,
-    showImage: false,
     isMobile: false,
     tile: Object.keys(TILE_MAP)[0],
   }
@@ -37,9 +35,6 @@ class GeoMap extends Component {
 
   componentDidMount() {
     this.handleData();
-
-    // tricks: 讓 marker icon 先 load
-    setTimeout(() => this.setState({ showImage: true }), 0);
   }
 
   initFirstRecord() {
@@ -70,13 +65,13 @@ class GeoMap extends Component {
 
     this.setState({
       point2Coordinate,
-      currentPoint: points[0].timeStr
+      currentPoint: points[0].timeStr,
     });
   }
 
   render() {
     const { id, tracks, trackInfo: { summary, points, overviews } = {} } = this.props;
-    const { currentPoint, showImage, point2Coordinate, tile } = this.state;
+    const { currentPoint, point2Coordinate, tile } = this.state;
     const defaultPosition = [23.575272, 120.770131];
     const originalPostion = points
       ? [points[0].latitude, points[0].longitude]
@@ -84,7 +79,7 @@ class GeoMap extends Component {
     let day = 0;
     return (
       <div className="outer-container">
-        <Form id='tileSelect'>
+        <Form id='tile-select' ref={ele => this.select = ele}>
           <Form.Control as="select" onChange={event => this.setState({ tile: event.target.value })}>
             {Object.keys(TILE_MAP).map(name => <option key={name}>{name}</option>)}
           </Form.Control>
@@ -155,12 +150,20 @@ class GeoMap extends Component {
                     <Col xs={12} sm={2}>人員：</Col>
                     <Col xs={12} sm={10}>{summary.members}<span>{summary.memberNumber}人</span></Col>
                   </Row>
+                  <Row>
+                    <Col xs={12} sm={2}>實際行程：</Col>
+                    <Col xs={12} sm={10}>
+                      {Object.values(overviews).map((overview, index) => (
+                        <div key={index}>D{index}: {overview}</div>
+                      ))}
+                    </Col>
+                  </Row>
                   {summary.references &&
                     <Row>
                       <Col xs={12} sm={2}>參考資料：</Col>
                       <Col xs={12} sm={10}>
-                        {summary.references.map(({ name, url }) => (
-                          <div className="reference">
+                        {summary.references.map(({ name, url }, index) => (
+                          <div className="reference" key={index}>
                             <a href={url} target="_blank">{name}<FontAwesomeIcon icon={faLink} transform="shrink-8" /></a>
                           </div>
                         ))}
@@ -171,9 +174,7 @@ class GeoMap extends Component {
                     <Row>
                       <Col xs={12} sm={2}>其他：</Col>
                       <Col xs={12} sm={10}>
-                        {summary.others.map(other => (
-                          <div>{other}</div>
-                        ))}
+                        {summary.others.map((other, index) => <div key={index}>{other}</div>)}
                         </Col>
                     </Row>
                   </>}
@@ -224,10 +225,9 @@ class GeoMap extends Component {
                             </>}
                             {point.photos.map(photo => (
                                 <ImageWrapper {...{
+                                  key: photo.fileName,
                                   src: `/images/${id}/${photo.fileName}`,
-                                  alt: photo.fileName,
-                                  showImage,
-                                  description: photo.description,
+                                  ...photo,
                                 }}/>
                             ))}
                           </div>
@@ -246,24 +246,25 @@ class GeoMap extends Component {
 
 const ImageWrapper = props => {
   const [error, setError] = useState(false);
-  const { src, alt, description, showImage } = props;
+  const { src, description, fileName, placeholder } = props;
   return (<>
-    { error || !showImage
-        ? null
-        : <div className="image-container">
-          <img {...{
-            src,
-            alt,
-            onError: () => setError(true),
-          }} />
-          {description ? <div className="image-description">{description}</div> : null}
-        </div>
+    {error
+      ? <img src={placeholder} alt={fileName} />
+      : <div className="image-container">
+          <LazyLoad {...{
+            height: 200,
+            offset: 100,
+            placeholder: <img src={placeholder} alt={fileName} />,
+          }}>
+            <img {...{
+              src,
+              alt: fileName,
+              onError: () => setError(true),
+            }} />
+        </LazyLoad>
+        {!!description && <div className="image-description">{description}</div>}
+      </div>
     }
-    {/* <LazyLoad height={200} offset={100}> */}
-    {/* <img src={imagesMap.imagesMap[`${point.timeStr}.jpg`]} alt={point.timeStr} /> */}
-    {/* <img src={require(`../public/image/${point.timeStr}.jpg`)} alt={point.timeStr} /> */}
-    {/* <img src={props.props} alt={props.alt} /> */}
-    {/* </LazyLoad> */}
   </>)
 }
 
