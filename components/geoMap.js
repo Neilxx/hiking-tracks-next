@@ -253,7 +253,7 @@ const ImageWrapper = props => {
       : <div className="image-container">
           <LazyLoad {...{
             height: 200,
-            offset: 100,
+            offset: 1250,
             placeholder: <img src={placeholder} alt={fileName} />,
           }}>
             <img {...{
