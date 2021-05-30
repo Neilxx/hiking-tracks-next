@@ -89,6 +89,7 @@ class GeoMap extends Component {
           key: tile,
           center: originalPostion,
           zoom: 15,
+          tap: false,
           whenCreated: () => {
             this.initFirstRecord();
             if (isMobile) {
