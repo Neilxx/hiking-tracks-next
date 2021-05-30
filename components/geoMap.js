@@ -155,7 +155,7 @@ class GeoMap extends Component {
                     <Col xs={12} sm={2}>實際行程：</Col>
                     <Col xs={12} sm={10}>
                       {Object.values(overviews).map((overview, index) => (
-                        <div key={index}>D{index}: {overview}</div>
+                        <div key={index}>D{index + 1}: {overview}</div>
                       ))}
                     </Col>
                   </Row>
