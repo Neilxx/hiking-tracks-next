@@ -65,8 +65,8 @@ export const getTrackInfo = async (id) => {
       title: '哈卡巴里斯',
       day: 4,
       date: '2021.04.02 - 2021.04.05',
-      members: '大軍(領隊 OB、紀錄)、彥廷(實領 OB)、曹妹(外校)、幾摳(嚮導 OB)、文家(嚮導 OB)、詣淳(嚮導 OB)、天赫(實領)',
-      memberNumber: 7,
+      members: '大軍(領隊 OB、紀錄)、彥廷(實領 OB)、曹妹(外校)、幾摳(嚮導 OB)、文家(嚮導 OB)、詣淳(嚮導 OB)、天赫(實領)、昱嘉(實領)',
+      memberNumber: 8,
       gpxFileName: '20210402_哈卡巴里斯_航跡.gpx',
       others: [
         '左右方向以本隊行進方向為主',
